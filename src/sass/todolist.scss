@@ -1,0 +1,103 @@
+
+.todolist {
+    margin: 0;
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+    padding-top: 20px;
+}
+
+.todolist__item {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.todolist__item-checkbox {
+    display: none;
+}
+
+.todolist__item-checkbox-label {
+    position: relative;
+
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+
+    border: 2px solid #edb3ff;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+
+    &:hover {
+        border-color: #c499e0;
+    }
+
+    &:focus {
+        border-color: #a86bd0;
+    }
+}
+
+.todolist__item-checkbox:checked + .todolist__item-checkbox-label::before {
+    content: "";
+
+    position: absolute;
+    top: -4px;
+    left: -2px;
+
+    display: block;
+    width: 22px;
+    height: 22px;
+
+    background: url("../img/check.svg") 0 0 no-repeat;
+}
+
+.todolist__item-text {
+    display: block;
+    margin-right: 10px;
+    padding: 8px;
+
+    border-radius: 5px;
+
+    &:hover {
+        background-color: #f8e1ff;
+    }
+
+    &:focus {
+        padding: 6px;
+
+        background-color: #f8e1ff;
+        border: 2px solid #f2cbfe;
+        outline: none;
+    }
+
+    &--checked {
+        text-decoration: line-through;
+    }
+}
+
+.todolist__button-delete {
+    margin-left: auto;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+
+    background: url("../img/trash.svg") 0 0 no-repeat;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    opacity: 0.5;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    &:focus {
+        opacity: 1;
+    }
+}
