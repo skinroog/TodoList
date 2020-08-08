@@ -14,10 +14,10 @@
   "devDependencies": {
     "autoprefixer": "^9.8.6",
     "cssnano": "^4.1.10",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
     "postcss-modules": "^3.2.0",
     "sass": "^1.26.10"
-  },
-  "plugins": {
-    "autoprefixer": true
   }
 }
