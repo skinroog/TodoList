@@ -14,21 +14,33 @@ export default class Model {
     };
 
     this.todos.push(todo);
+
+    this.onTodoListChanged(this.todos);
   }
 
   editTodo(id, updatedText) {
     this.todos.forEach(todo => {
       if (todo.id === id) todo.text = updatedText;
     });
+
+    this.onTodoListChanged(this.todos);
   }
 
   deleteTodo(id) {
     this.todos = this.todos.filter(todo => todo.id !== id);
+
+    this.onTodoListChanged(this.todos);
   }
 
   toggleTodo(id) {
     this.todos.forEach(todo => {
       if (todo.id === id) todo.complete = !todo.complete;
     });
+
+    this.onTodoListChanged(this.todos);
+  }
+
+  bindTodoListChanged(callback) {
+    this.onTodoListChanged = callback;
   }
 }

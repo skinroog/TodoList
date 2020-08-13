@@ -24,6 +24,9 @@ export default class View {
     this.form.append(this.input, this.submitButton);
 
     this.app.append(this.title, this.date, this.form, this.todoList);
+
+    this._temporaryTodoText = '';
+    this._initLocalListeners();
   }
 
   createElement(tagName, className) {
@@ -37,6 +40,14 @@ export default class View {
     const element = document.querySelector(selector);
 
     return element;
+  }
+
+  get _todoText() {
+    return this.input.value;
+  }
+
+  _resetInput() {
+    this.input.value = '';
   }
 
   displayTodo(todos) {
@@ -56,7 +67,7 @@ export default class View {
         const checkbox = this.createElement('input', 'todolist__item-checkbox');
         checkbox.type = 'checkbox';
         checkbox.id = `checkbox${li.id}`;
-        checkbox.checked = todo.checked;
+        checkbox.checked = todo.complete;
 
         const label = this.createElement('label', 'todolist__item-checkbox-label');
         label.setAttribute('for', `checkbox${li.id}`);
@@ -76,5 +87,54 @@ export default class View {
         this.todoList.append(li);
       });
     }
+  }
+
+  bindAddTodo(handler) {
+    this.form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (this._todoText) {
+        handler(this._todoText);
+        this._resetInput();
+      }
+    });
+  }
+
+  bindDeleteTodo(handler) {
+    this.todoList.addEventListener('click', (event) => {
+      if (!event.target.matches('.todolist__button-delete')) return;
+
+      const id = +event.target.parentElement.id;
+      handler(id);
+    });
+  }
+
+  bindToggleTodo(handler) {
+    this.todoList.addEventListener('change', (event) => {
+      if (!event.target.matches('.todolist__item-checkbox')) return;
+
+      const id = +event.target.parentElement.id;
+      handler(id);
+    });
+  }
+
+  _initLocalListeners() {
+    this.todoList.addEventListener('input', (event) => {
+      if (!event.target.matches('.todolist__item-text')) return;
+
+      this._temporaryTodoText = event.target.textContent;
+    });
+  }
+
+  bindEditTodo = (handler) => {
+    this.todoList.addEventListener('focusout', (event) => {
+      if (!event.target.matches('.todolist__item-text')) return;
+
+      if (!this._temporaryTodoText) return;
+
+      const id = +event.target.parentElement.id;
+      handler(id, this._temporaryTodoText);
+      this._temporaryTodoText = '';
+    });
   }
 }
