@@ -1,9 +1,6 @@
 export default class Model {
   constructor() {
-    this.todos = [
-      { id: 1, text: 'Прочитать 30 страниц', complete: false },
-      { id: 2, text: 'Убраться в комнате', complete: false },
-    ];
+    this.todos = JSON.parse(localStorage.getItem('todos')) || [];
   }
 
   addTodo(todoText) {
@@ -15,7 +12,7 @@ export default class Model {
 
     this.todos.push(todo);
 
-    this.onTodoListChanged(this.todos);
+    this._commit(this.todos);
   }
 
   editTodo(id, updatedText) {
@@ -23,13 +20,13 @@ export default class Model {
       if (todo.id === id) todo.text = updatedText;
     });
 
-    this.onTodoListChanged(this.todos);
+    this._commit(this.todos);
   }
 
   deleteTodo(id) {
     this.todos = this.todos.filter(todo => todo.id !== id);
 
-    this.onTodoListChanged(this.todos);
+    this._commit(this.todos);
   }
 
   toggleTodo(id) {
@@ -37,10 +34,15 @@ export default class Model {
       if (todo.id === id) todo.complete = !todo.complete;
     });
 
-    this.onTodoListChanged(this.todos);
+    this._commit(this.todos);
   }
 
   bindTodoListChanged(callback) {
     this.onTodoListChanged = callback;
+  }
+
+  _commit(todos) {
+    this.onTodoListChanged(this.todos);
+    localStorage.setItem('todos', JSON.stringify(this.todos));
   }
 }
