@@ -16,7 +16,7 @@ export default class Model {
   }
 
   editTodo(id, updatedText) {
-    this.todos.forEach(todo => {
+    this.todos.forEach((todo) => {
       if (todo.id === id) todo.text = updatedText;
     });
 
@@ -24,13 +24,13 @@ export default class Model {
   }
 
   deleteTodo(id) {
-    this.todos = this.todos.filter(todo => todo.id !== id);
+    this.todos = this.todos.filter((todo) => todo.id !== id);
 
     this._commit(this.todos);
   }
 
   toggleTodo(id) {
-    this.todos.forEach(todo => {
+    this.todos.forEach((todo) => {
       if (todo.id === id) todo.complete = !todo.complete;
     });
 
